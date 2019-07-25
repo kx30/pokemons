@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/detailCardImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/nameTextView"
+            style="@style/DetailCardTextView"
+            android:text="Name:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailCardImageView" />
+
+        <TextView
+            android:id="@+id/pokemonNameTextView"
+            style="@style/PokemonDetailCardTextView"
+            android:text="Zaloopkin"
+            app:layout_constraintStart_toEndOf="@id/nameTextView"
+            app:layout_constraintTop_toBottomOf="@id/detailCardImageView" />
+
+        <TextView
+            android:id="@+id/rarityTextView"
+            style="@style/DetailCardTextView"
+            android:text="Rarity:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameTextView" />
+
+        <TextView
+            android:id="@+id/pokemonRarityTextView"
+            style="@style/PokemonDetailCardTextView"
+            android:text="Common"
+            app:layout_constraintStart_toEndOf="@id/rarityTextView"
+            app:layout_constraintTop_toBottomOf="@id/nameTextView" />
+
+        <TextView
+            android:id="@+id/typeTextView"
+            style="@style/DetailCardTextView"
+            android:text="Type:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rarityTextView" />
+
+        <TextView
+            android:id="@+id/pokemonTypeTextView"
+            style="@style/PokemonDetailCardTextView"
+            android:text="Pokemon"
+            app:layout_constraintStart_toEndOf="@id/typeTextView"
+            app:layout_constraintTop_toBottomOf="@id/rarityTextView" />
+
+        <TextView
+            android:id="@+id/subtypeTextView"
+            style="@style/DetailCardTextView"
+            android:text="Subtype:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/typeTextView" />
+
+        <TextView
+            android:id="@+id/pokemonSubtypeTextView"
+            style="@style/PokemonDetailCardTextView"
+            android:text="Subtype"
+            app:layout_constraintStart_toEndOf="@id/subtypeTextView"
+            app:layout_constraintTop_toBottomOf="@id/typeTextView" />
+
+        <TextView
+            android:id="@+id/hpTextView"
+            style="@style/DetailCardTextView"
+            android:text="HP:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/subtypeTextView" />
+
+        <TextView
+            android:id="@+id/pokemonHPTextView"
+            style="@style/PokemonDetailCardTextView"
+            android:text="40"
+            app:layout_constraintStart_toEndOf="@id/hpTextView"
+            app:layout_constraintTop_toBottomOf="@id/subtypeTextView" />
+
+        <TextView
+            android:id="@+id/typeOfAttacksTextView"
+            style="@style/DetailCardTextView"
+            android:text="Type of attacks:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hpTextView" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/typeOfAttackRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/typeOfAttacksTextView">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
