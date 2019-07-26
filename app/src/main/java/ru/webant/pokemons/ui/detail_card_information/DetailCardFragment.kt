@@ -2,7 +2,6 @@ package ru.webant.pokemons.ui.detail_card_information
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -19,8 +18,6 @@ import ru.webant.pokemons.ui.main.MainActivity
 
 class DetailCardFragment : MvpAppCompatFragment(), DetailCardView {
 
-
-    private val TAG = "DetailCardFragment"
     @InjectPresenter
     lateinit var detailCardPresenter: DetailCardPresenter
     

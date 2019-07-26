@@ -9,7 +9,7 @@ data class CardEntity (
     val supertype: String,
     val subtype: String,
     val hp: String,
-    val rarity: String,
+    val rarity: String?,
     val attacks: List<TypeOfAttacksEntity>,
     val isFavorite: Boolean = false
 ): Serializable

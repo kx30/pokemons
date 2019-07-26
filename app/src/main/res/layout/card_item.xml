@@ -8,21 +8,24 @@
         android:id="@+id/cardItemImageView"
         android:layout_width="match_parent"
         android:layout_height="280dp"
-        android:src="@drawable/ic_launcher_background"
         android:layout_margin="10dp"
+        android:src="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/favoriteIconImageView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="15dp"
-        android:padding="10dp"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/favoriteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/whitish"
+        android:scaleType="center"
         android:src="@drawable/ic_favorite_border"
-        app:layout_constraintEnd_toEndOf="@id/cardItemImageView"
-        app:layout_constraintTop_toTopOf="@id/cardItemImageView" />
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="44dp" />
 
 </android.support.constraint.ConstraintLayout>

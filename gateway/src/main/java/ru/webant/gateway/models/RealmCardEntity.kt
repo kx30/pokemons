@@ -16,7 +16,7 @@ open class RealmCardEntity : RealmObject() {
     var supertype: String = ""
     var subtype: String = ""
     var hp: String = ""
-    var rarity: String = ""
+    var rarity: String? = null
     var attacks = RealmList<RealmTypeOfAttacksEntity>()
     var isFavorite: Boolean = false
 

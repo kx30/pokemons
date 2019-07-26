@@ -13,7 +13,10 @@ interface CardView : MvpView {
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun replaceByDetailInformationFragment(card: CardEntity)
 
+    @StateStrategyType(OneExecutionStateStrategy::class)
     fun notifyDataSetChangedAdapter(cards: List<CardEntity>)
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun changeSearchIsEmptyTextView(show: Boolean)
     fun changeStateBeforeDownload()
     fun changeStateAfterDownload()
 }

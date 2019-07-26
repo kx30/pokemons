@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.SearchView
+import android.view.*
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_card.*
@@ -22,6 +21,7 @@ class CardFragment : MvpAppCompatFragment(), CardView, AdapterCardInterface {
     private var currentVisiblePosition: Int? = 0
     private var listState: Parcelable? = null
     private var isLoading = false
+    private var isSearching = false
     private lateinit var adapter: CardAdapter
     @InjectPresenter
     lateinit var cardPresenter: CardPresenter
@@ -40,12 +40,17 @@ class CardFragment : MvpAppCompatFragment(), CardView, AdapterCardInterface {
         setOnScrollListener()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     private fun setOnScrollListener() {
         cardRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val gridLayoutManager = cardRecyclerView.layoutManager as GridLayoutManager
-                if (!isLoading &&
+                if (!isLoading && !isSearching &&
                     gridLayoutManager.itemCount <= gridLayoutManager.findLastVisibleItemPosition() + 2
                 ) {
                     cardPresenter.changeStateBeforeDownload()
@@ -75,12 +80,48 @@ class CardFragment : MvpAppCompatFragment(), CardView, AdapterCardInterface {
         cardProgressBar.visibility = View.GONE
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.search_menu, menu)
+        val searchItem = menu?.findItem(R.id.menu_search)
+
+        if (searchItem != null) {
+            val searchView = searchItem.actionView as SearchView
+            searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    newText?.let {
+                        if (newText.isNotEmpty()) {
+                            isSearching = true
+                            cardPresenter.updateSearchCards(newText)
+                        } else {
+                            isSearching = false
+                            changeSearchIsEmptyTextView(false)
+                            cardPresenter.clearSearchCards()
+                        }
+                    }
+                    return true
+                }
+            })
+        }
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun changeSearchIsEmptyTextView(show: Boolean) {
+        if (show) {
+            searchIsEmptyTextView.visibility = View.VISIBLE
+        } else {
+            searchIsEmptyTextView.visibility = View.GONE
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         currentVisiblePosition?.let {
             cardRecyclerView.layoutManager?.scrollToPosition(it)
         }
-
         listState?.let {
             cardRecyclerView.layoutManager?.onRestoreInstanceState(listState)
         }

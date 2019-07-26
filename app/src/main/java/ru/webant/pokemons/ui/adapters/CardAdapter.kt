@@ -51,6 +51,7 @@ class CardAdapter(private var cardList: List<CardEntity>, private val adapterCar
             with(itemView) {
                 Picasso.get()
                     .load(card.imageUrlHiRes)
+                    .placeholder(R.drawable.placeholder)
                     .into(cardItemImageView)
 
                 changeFavoriteIconIfCardIsFavorite(card)
@@ -59,7 +60,7 @@ class CardAdapter(private var cardList: List<CardEntity>, private val adapterCar
                     adapterCardView.replaceByDetailInformationFragmentFromAdapter(card)
                 }
 
-                favoriteIconImageView.setOnClickListener {
+                favoriteButton.setOnClickListener {
                     adapterCardView.updateFavoriteCardFromAdapter(card)
                     changeFavoriteIconIfCardIsFavorite(card)
                 }
@@ -68,9 +69,9 @@ class CardAdapter(private var cardList: List<CardEntity>, private val adapterCar
 
         private fun changeFavoriteIconIfCardIsFavorite(card: CardEntity) {
             if (favoriteCardsGatewayImpl.cardIsFavorite(card)) {
-                itemView.favoriteIconImageView.setImageResource(R.drawable.ic_favorite_active)
+                itemView.favoriteButton.setImageResource(R.drawable.ic_favorite_active)
             } else {
-                itemView.favoriteIconImageView.setImageResource(R.drawable.ic_favorite_border)
+                itemView.favoriteButton.setImageResource(R.drawable.ic_favorite_border)
             }
         }
     }

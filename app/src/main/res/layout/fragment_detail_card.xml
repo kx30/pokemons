@@ -5,10 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/detailCardImageView"
@@ -22,21 +21,25 @@
         <TextView
             android:id="@+id/nameTextView"
             style="@style/DetailCardTextView"
-            android:text="Name:"
+            android:text="Имя:"
+            android:textSize="30dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detailCardImageView" />
 
         <TextView
             android:id="@+id/pokemonNameTextView"
             style="@style/PokemonDetailCardTextView"
-            android:text="Zaloopkin"
+            android:text="Pickachu"
+            android:textSize="30dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/nameTextView"
             app:layout_constraintTop_toBottomOf="@id/detailCardImageView" />
 
         <TextView
             android:id="@+id/rarityTextView"
             style="@style/DetailCardTextView"
-            android:text="Rarity:"
+            android:text="Редкость:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/nameTextView" />
 
@@ -50,7 +53,7 @@
         <TextView
             android:id="@+id/typeTextView"
             style="@style/DetailCardTextView"
-            android:text="Type:"
+            android:text="Тип:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rarityTextView" />
 
@@ -64,7 +67,7 @@
         <TextView
             android:id="@+id/subtypeTextView"
             style="@style/DetailCardTextView"
-            android:text="Subtype:"
+            android:text="Подтип:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/typeTextView" />
 
@@ -78,7 +81,7 @@
         <TextView
             android:id="@+id/hpTextView"
             style="@style/DetailCardTextView"
-            android:text="HP:"
+            android:text="Здоровье:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/subtypeTextView" />
 
@@ -92,18 +95,51 @@
         <TextView
             android:id="@+id/typeOfAttacksTextView"
             style="@style/DetailCardTextView"
-            android:text="Type of attacks:"
+            android:layout_marginTop="20dp"
+            android:text="Виды атаки:"
+            android:textSize="26dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/hpTextView" />
 
+        <LinearLayout
+            android:id="@+id/typeOfAttacksLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:weightSum="6"
+            app:layout_constraintStart_toStartOf="@id/typeOfAttacksTextView"
+            app:layout_constraintTop_toBottomOf="@id/typeOfAttacksTextView">
+
+            <TextView
+                style="@style/TypeOfAttackPointTable"
+                android:layout_weight="2"
+                android:text="Название" />
+
+            <TextView
+                style="@style/TypeOfAttackPointTable"
+                android:layout_weight="2"
+                android:text="Стоимость" />
+
+            <TextView
+                style="@style/TypeOfAttackPointTable"
+                android:layout_weight="1"
+                android:text="Урон" />
+
+            <TextView
+                style="@style/TypeOfAttackPointTable"
+                android:layout_weight="1"
+                android:text="Мана" />
+
+        </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/typeOfAttackRecyclerView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/typeOfAttacksTextView">
+            app:layout_constraintTop_toBottomOf="@id/typeOfAttacksLinearLayout">
 
         </android.support.v7.widget.RecyclerView>
 

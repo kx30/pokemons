@@ -11,6 +11,8 @@ class CardsGatewayImpl(private val api: Api, private val realm: Realm) : CardsGa
 
     override fun getCards(page: Int): Single<JsonCardsEntity> = api.getCards(page = page)
 
+    override fun searchCards(name: String): Single<JsonCardsEntity> = api.searchCards(name = name)
+
     override fun saveCard(card: CardEntity) {
         realm.executeTransaction { realm ->
             if (realm.where(RealmCardEntity::class.java).equalTo("id", card.id).findFirst() == null) {

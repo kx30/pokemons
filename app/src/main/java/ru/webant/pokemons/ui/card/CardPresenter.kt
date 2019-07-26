@@ -16,7 +16,8 @@ import javax.inject.Inject
 class CardPresenter : MvpPresenter<CardView>() {
 
     private val TAG = "CardPresenter"
-    private val cards = ArrayList<CardEntity>()
+    private val downloadCards = ArrayList<CardEntity>()
+    private var displayCards = ArrayList<CardEntity>()
     private val compositeDisposable = CompositeDisposable()
     private var currentPage = 1
     @Inject
@@ -40,22 +41,22 @@ class CardPresenter : MvpPresenter<CardView>() {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnError {
                 cardsGatewayImpl.getCardsFromDatabase(currentPage).forEach { card ->
-                    cards.add(card)
+                    downloadCards.add(card)
                 }
                 Log.d(TAG, "onError")
             }
             .doFinally {
                 if (firstLoad) {
-                    viewState.initRecyclerView(cards)
+                    viewState.initRecyclerView(downloadCards)
                 }
                 currentPage++
-                viewState.notifyDataSetChangedAdapter(cards)
+                viewState.notifyDataSetChangedAdapter(downloadCards)
                 viewState.changeStateAfterDownload()
                 Log.d(TAG, "doFinally")
             }
             .subscribe({ result ->
                 result.cards.forEach { card ->
-                    cards.add(card)
+                    downloadCards.add(card)
                     cardsGatewayImpl.saveCard(card)
                 }
                 Log.d(TAG, "subscribe")
@@ -63,6 +64,35 @@ class CardPresenter : MvpPresenter<CardView>() {
                 it.printStackTrace()
             })
             .let(compositeDisposable::add)
+    }
+
+    fun updateSearchCards(newText: String) {
+        displayCards.clear()
+        Log.d(TAG, "updateSearchCards: $newText")
+        cardsGatewayImpl.searchCards(newText)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ result ->
+                result.cards.forEach { foundCard ->
+                    displayCards.add(foundCard)
+                    Log.d(TAG, "updateSearchCards: ${displayCards.size}")
+                }
+                if (displayCards.isEmpty()) {
+                    viewState.changeSearchIsEmptyTextView(true)
+                } else {
+                    viewState.changeSearchIsEmptyTextView(false)
+                }
+                viewState.notifyDataSetChangedAdapter(displayCards)
+            }, {
+                it.printStackTrace()
+            })
+            .let(compositeDisposable::add)
+    }
+
+    fun clearSearchCards() {
+        displayCards.clear()
+        displayCards.addAll(downloadCards)
+        viewState.notifyDataSetChangedAdapter(displayCards)
     }
 
     fun changeStateBeforeDownload() {
