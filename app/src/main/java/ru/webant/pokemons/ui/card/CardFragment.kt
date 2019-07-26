@@ -1,10 +1,10 @@
 package ru.webant.pokemons.ui.card
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
+import android.util.Log
 import android.view.*
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -19,7 +19,6 @@ import ru.webant.pokemons.ui.main.MainActivity
 class CardFragment : MvpAppCompatFragment(), CardView, AdapterCardInterface {
 
     private var currentVisiblePosition: Int? = 0
-    private var listState: Parcelable? = null
     private var isLoading = false
     private var isSearching = false
     private lateinit var adapter: CardAdapter
@@ -38,11 +37,13 @@ class CardFragment : MvpAppCompatFragment(), CardView, AdapterCardInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setOnScrollListener()
+        setHasOptionsMenu(true)
+        adapter = CardAdapter(emptyList(), this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("CardFragment", "onDestroy: $currentVisiblePosition")
     }
 
     private fun setOnScrollListener() {
@@ -98,7 +99,6 @@ class CardFragment : MvpAppCompatFragment(), CardView, AdapterCardInterface {
                             cardPresenter.updateSearchCards(newText)
                         } else {
                             isSearching = false
-                            changeSearchIsEmptyTextView(false)
                             cardPresenter.clearSearchCards()
                         }
                     }
@@ -120,10 +120,8 @@ class CardFragment : MvpAppCompatFragment(), CardView, AdapterCardInterface {
     override fun onResume() {
         super.onResume()
         currentVisiblePosition?.let {
+            Log.d("CardFragment", "onResume: $currentVisiblePosition")
             cardRecyclerView.layoutManager?.scrollToPosition(it)
-        }
-        listState?.let {
-            cardRecyclerView.layoutManager?.onRestoreInstanceState(listState)
         }
     }
 
@@ -133,6 +131,7 @@ class CardFragment : MvpAppCompatFragment(), CardView, AdapterCardInterface {
             currentVisiblePosition = (cardRecyclerView.layoutManager as GridLayoutManager)
                 .findFirstVisibleItemPosition()
         }
+        Log.d("CardFragment", "onPause: $currentVisiblePosition")
     }
 
     override fun replaceByDetailInformationFragmentFromAdapter(card: CardEntity) {
@@ -147,8 +146,6 @@ class CardFragment : MvpAppCompatFragment(), CardView, AdapterCardInterface {
         val bundle = Bundle()
         bundle.putSerializable("pokemon", card)
 
-        (activity as MainActivity).mainPresenter.hideBottomNavigationMenu()
-
         val fragment = DetailCardFragment()
         fragment.arguments = bundle
 
@@ -156,5 +153,7 @@ class CardFragment : MvpAppCompatFragment(), CardView, AdapterCardInterface {
             ?.replace(R.id.fragmentContainer, fragment)
             ?.addToBackStack(null)
             ?.commit()
+
+        (activity as MainActivity).mainPresenter.hideBottomNavigationMenu()
     }
 }

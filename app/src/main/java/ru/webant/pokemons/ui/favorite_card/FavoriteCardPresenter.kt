@@ -24,12 +24,16 @@ class FavoriteCardPresenter : MvpPresenter<FavoriteCardView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         loadFavoriteCards(true)
+    }
+
+    override fun attachView(view: FavoriteCardView?) {
+        super.attachView(view)
         checkIfThereIsNotFavorites()
     }
 
     fun loadFavoriteCards(firstLoad: Boolean) {
         if (favoriteCardsGatewayImpl.getFavoriteCards(currentPage).isNotEmpty()) {
-            viewState.changeStateBeforeDownload()
+            viewState.changeDownloadState(true)
             favoriteCardsGatewayImpl.getFavoriteCards(currentPage).forEach { favoriteCard ->
                 favoriteCards.add(favoriteCard)
             }
@@ -38,14 +42,14 @@ class FavoriteCardPresenter : MvpPresenter<FavoriteCardView>() {
             }
             currentPage++
             viewState.notifyDataSetChangedAdapter(favoriteCards)
-            viewState.changeStateAfterDownload()
+            viewState.changeDownloadState(false)
         }
     }
 
     private fun checkIfThereIsNotFavorites() {
         if (favoriteCardsGatewayImpl.getFavoriteCards(firstPage).isEmpty()) {
             viewState.showThereIsNotFavoriteTextView()
-            viewState.changeStateAfterDownload()
+            viewState.changeDownloadState(false)
         }
     }
 

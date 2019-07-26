@@ -1,7 +1,6 @@
 package ru.webant.pokemons.ui.adapters
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,9 +25,7 @@ class CardAdapter(private var cardList: List<CardEntity>, private val adapterCar
 
     override fun onCreateViewHolder(view: ViewGroup, position: Int): CardViewHolder {
         return CardViewHolder(
-            LayoutInflater
-                .from(view.context)
-                .inflate(R.layout.card_item, view, false)
+            LayoutInflater.from(view.context).inflate(R.layout.card_item, view, false)
         )
     }
 

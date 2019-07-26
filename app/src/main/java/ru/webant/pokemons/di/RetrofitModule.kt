@@ -26,8 +26,7 @@ class RetrofitModule {
     fun providesClient(): OkHttpClient = OkHttpClient
         .Builder()
         .addInterceptor { chain ->
-            val request = chain.request()
-            val response = chain.proceed(request)
+            val response = chain.proceed(chain.request())
             when (response.code()) {
                 400 -> Log.e("Error", "The request was invalid")
                 403 -> Log.e("Error", "The client did not have permission to access the requested resource")

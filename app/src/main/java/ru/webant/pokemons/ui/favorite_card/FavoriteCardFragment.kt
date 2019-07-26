@@ -36,14 +36,7 @@ class FavoriteCardFragment : MvpAppCompatFragment(), FavoriteCardView, AdapterCa
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setOnScrollListener()
-    }
-
-    override fun showThereIsNotFavoriteTextView() {
-        thereIsNotFavorite.visibility = View.VISIBLE
-    }
-
-    override fun hideThereIsNotFavoriteTextView() {
-        thereIsNotFavorite.visibility = View.GONE
+        adapter = CardAdapter(emptyList(), this)
     }
 
     private fun setOnScrollListener() {
@@ -52,21 +45,26 @@ class FavoriteCardFragment : MvpAppCompatFragment(), FavoriteCardView, AdapterCa
                 super.onScrolled(recyclerView, dx, dy)
                 val gridLayoutManager = favoriteCardRecyclerView.layoutManager as GridLayoutManager
                 if (!isLoading &&
-                    gridLayoutManager.itemCount <= gridLayoutManager.findLastVisibleItemPosition() + 2) {
+                    gridLayoutManager.itemCount <= gridLayoutManager.findLastVisibleItemPosition() + 2
+                ) {
                     favoriteCardPresenter.loadFavoriteCards(false)
                 }
             }
         })
     }
 
-    override fun changeStateBeforeDownload() {
-        isLoading = true
-        favoriteCardProgressBar.visibility = View.VISIBLE
+    override fun changeDownloadState(beforeDownload: Boolean) {
+        if (beforeDownload) {
+            isLoading = true
+            favoriteCardProgressBar.visibility = View.VISIBLE
+        } else {
+            isLoading = false
+            favoriteCardProgressBar.visibility = View.GONE
+        }
     }
 
-    override fun changeStateAfterDownload() {
-        isLoading = false
-        favoriteCardProgressBar.visibility = View.GONE
+    override fun showThereIsNotFavoriteTextView() {
+        thereIsNotFavorite.visibility = View.VISIBLE
     }
 
     override fun initRecyclerView(cards: List<CardEntity>) {

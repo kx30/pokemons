@@ -35,8 +35,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     private fun setupBottomNavigation() {
         bottomNavigationMenu.setTextVisibility(false)
-        bottomNavigationMenu.enableItemShiftingMode(false)
-        bottomNavigationMenu.enableShiftingMode(false)
         bottomNavigationMenu.enableAnimation(false)
         for (i in 0 until bottomNavigationMenu.menu.size()) {
             bottomNavigationMenu.setIconTintList(i, null)

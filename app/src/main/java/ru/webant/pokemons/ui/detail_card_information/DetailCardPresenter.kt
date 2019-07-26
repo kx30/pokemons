@@ -7,7 +7,6 @@ import ru.webant.core.models.CardEntity
 @InjectViewState
 class DetailCardPresenter : MvpPresenter<DetailCardView>() {
 
-
     fun showDetailInformation(card: CardEntity) {
         viewState.initDetailInformation(card)
         card.attacks.let {

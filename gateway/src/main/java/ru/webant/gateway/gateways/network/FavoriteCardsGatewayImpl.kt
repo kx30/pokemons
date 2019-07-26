@@ -8,21 +8,29 @@ import ru.webant.gateway.models.RealmCardEntity
 class FavoriteCardsGatewayImpl(private val realm: Realm): FavoriteCardsGateway {
 
     override fun updateFavoriteCard(card: CardEntity) {
-        realm.executeTransaction { realm ->
+        realm.executeTransaction {
             if (!cardIsFavorite(card)) {
-                val realmCard = realm
-                    .where(RealmCardEntity::class.java)
-                    .equalTo("id", card.id)
-                    .findFirst()
-                realmCard?.isFavorite = true
+                saveFavoriteCard(card)
             } else {
-                val realmCard = realm
-                    .where(RealmCardEntity::class.java)
-                    .equalTo("id", card.id)
-                    .findFirst()
-                realmCard?.isFavorite = false
+                removeFavoriteCard(card)
             }
         }
+    }
+
+    private fun saveFavoriteCard(card: CardEntity) {
+        val realmCard = realm
+            .where(RealmCardEntity::class.java)
+            .equalTo("id", card.id)
+            .findFirst()
+        realmCard?.isFavorite = true
+    }
+
+    private fun removeFavoriteCard(card: CardEntity) {
+        val realmCard = realm
+            .where(RealmCardEntity::class.java)
+            .equalTo("id", card.id)
+            .findFirst()
+        realmCard?.isFavorite = false
     }
 
     override fun getFavoriteCards(page: Int): ArrayList<CardEntity> {

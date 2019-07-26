@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.type_of_attack_item.view.*
 import ru.webant.core.models.TypeOfAttacksEntity
 import ru.webant.pokemons.R
@@ -32,11 +31,7 @@ class TypeOfAttackAdapter(private var typeOfAttackList: List<TypeOfAttacksEntity
 
         fun bind(typeOfAttack: TypeOfAttacksEntity) {
             with(itemView) {
-                var typeOfAttackCostText = ""
-                typeOfAttack.cost.forEach {
-                    typeOfAttackCostText += "$it "
-                }
-                pokemonCostTypeOfAttack.text = typeOfAttackCostText
+                pokemonCostTypeOfAttack.text = typeOfAttack.cost[0]
                 pokemonNameTypeOfAttack.text = typeOfAttack.name
                 pokemonDamageTypeOfAttack.text = typeOfAttack.damage
                 pokemonEnergyCostTypeOfAttack.text = typeOfAttack.energyCost.toString()

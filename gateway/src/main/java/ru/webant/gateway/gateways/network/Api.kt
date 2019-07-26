@@ -7,7 +7,7 @@ import ru.webant.core.models.JsonCardsEntity
 
 interface Api {
 
-    @GET("v/cards")
+    @GET("v1/cards")
     fun getCards(
         @Query("supertype") supertype: String = "pokemon",
         @Query("pageSize") limit: Int = 10,

@@ -4,7 +4,6 @@ import dagger.Component
 import ru.webant.pokemons.ui.adapters.CardAdapter
 import ru.webant.pokemons.ui.card.CardPresenter
 import ru.webant.pokemons.ui.favorite_card.FavoriteCardPresenter
-import ru.webant.pokemons.ui.main.MainActivity
 import javax.inject.Singleton
 
 @Singleton

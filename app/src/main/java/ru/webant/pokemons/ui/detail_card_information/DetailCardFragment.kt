@@ -20,7 +20,7 @@ class DetailCardFragment : MvpAppCompatFragment(), DetailCardView {
 
     @InjectPresenter
     lateinit var detailCardPresenter: DetailCardPresenter
-    
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,12 +34,16 @@ class DetailCardFragment : MvpAppCompatFragment(), DetailCardView {
         super.onViewCreated(view, savedInstanceState)
         val card = arguments?.getSerializable("pokemon") as CardEntity
         detailCardPresenter.showDetailInformation(card)
+        setBackPressButton(view)
+    }
+
+    private fun setBackPressButton(view: View) {
         view.isFocusableInTouchMode = true
         view.requestFocus()
-        view.setOnKeyListener { v, keyCode, event ->
+        view.setOnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
-                (activity as MainActivity).mainPresenter.showBottomNavigationMenu()
                 fragmentManager?.popBackStack()
+                (activity as MainActivity).mainPresenter.showBottomNavigationMenu()
                 return@setOnKeyListener true
             }
             false
